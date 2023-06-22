@@ -21,3 +21,38 @@ The `.format('libsvm')` method in Apache Spark is used to specify the format of 
 > 0 128:51 129:159 130:253 ...
 
 This signifies that this point's label is 0, the feature indexed at 128 has the value 51, the feature at 129 has the value 159, and so forth.
+
+#### Tree Method Classifiers
+- Intuition Behind Splits
+  **Entropy** and **Information Gain** are the Mathematical Methods of choosing the best split.
+  
+- Random Forests
+  To improve performance, we can use many trees with a random sample of features chosen as the split.
+  - A new random sample of features is chosen for every single tree at every single split.
+  - Works for both classification and regression tasks!
+  - Suppose there is **one very strong feature** in the data set. Most of the trees will use that feature as the top split, resulting in an ensemble of similar trees that are **highly correlated**.
+  - Averaging highly correlated quantities does not significantly reduce variance, however, by randomly leaving out candidate features from each split, Random Forests *"decorrelate"* the trees, such that the averaging process can reduce the variance of the resulting model.
+ 
+- Gradient Boosted Trees
+  -  A loss function to be optimized
+  -  A weak learner to make predictions
+  -  An additive model to add weak learners to minimize the loss function
+ 
+  -  The workflow of gradient boosting, in a simplified and concise manner, is as follows:
+     > 1. **Initialize**: Train an initial decision tree model and make predictions.
+     > 2. **Compute Errors**: Calculate the errors made by this model, which are the differences between the predicted and actual values.
+     > 3. **Train More Models**: Train another model that attempts to correct the errors made by the previous model.
+     > 4. **Iterate**: Repeat this process for a specified number of iterations, each time trying to correct the residuals (errors) from the previous model's predictions.
+     > 5. **Combine**: Aggregate the predictions from all models, often a simple sum of the individual predictions, to get the final prediction.
+
+- Having a `.featureImportances` attribute available, we can check which features (x) affect outcome (y) the most.
+
+- So, 3 steps to implement it in Spark:
+  1. Train a weak model **m** using data samples drawn according to some weight distribution.
+  2. Increase the weight of samples that are misclassified by model m, and decrease the weight of samples that are classified correctly by model **m**.
+  3. Train the next weak model using samples drawn according to the updated weight distribution.
+ 
+  In this way, the algorithm always trains models using data samples that are "difficult" to learn in previous rounds, which results in an ensemble of models that are good at learning different "parts" of training data.
+
+
+
