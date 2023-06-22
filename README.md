@@ -55,4 +55,14 @@ This signifies that this point's label is 0, the feature indexed at 128 has the 
   In this way, the algorithm always trains models using data samples that are "difficult" to learn in previous rounds, which results in an ensemble of models that are good at learning different "parts" of training data.
 
 
+#### K-means Clustering
+- **Elbow method** to choose the "K" value at which the SSE decreases abruptly.
+  First of all, compute the sum of squared error (SSE) for some values of k (for example 2, 4, 6, 8, etc.).
+  The SSE is defined as the sum of the squared distance between each member of the cluster and its centroid.
+
+  ![hi](https://imgtr.ee/images/2023/06/22/mnTs7.png)
+  
+
+
+
 
